@@ -1,4 +1,4 @@
-public class Exercise {
+public class Exercise6 {
 
     public static void main(String[] args) {
         boolean flag1 = isHoopy(202);

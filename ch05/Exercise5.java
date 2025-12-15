@@ -1,4 +1,4 @@
-public class Exercise {
+public class Exercise5 {
 
     public static void zoop(String fred, int bob) {
         System.out.println(fred);

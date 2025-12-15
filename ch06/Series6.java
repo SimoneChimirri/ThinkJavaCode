@@ -1,7 +1,7 @@
 /**
  * Examples from Chapter 6.
  */
-public class Series {
+public class Series6 {
 
     public static void countup(int n) {
         if (n == 0) {
