@@ -75,7 +75,7 @@ public class ArrayExamples {
         System.out.println(indexOfMax(array));
         System.out.println(sieve(5));
         System.out.println(areFactors(24,array));
-        System.out.println(areFactors(24,array));
+        System.out.println(arePrimeFactors(24,array));
     }
 
     /**
