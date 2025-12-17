@@ -66,7 +66,7 @@ public class Exercise6 {
     }
 
     /**
-     * This method calculate the value of the
+     * This method calculates the value of the
      * Ackermann function given two non-negative integers
      * @param m the first non-negative integer
      * @param n the second non-negative integer
@@ -86,7 +86,7 @@ public class Exercise6 {
     }
 
     /**
-     * This recursive method calculate
+     * This recursive method calculates
      * the value of the power x^n.
      * @param x the base of the power
      * @param n the exponent of the power

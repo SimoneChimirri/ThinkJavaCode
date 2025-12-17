@@ -25,7 +25,7 @@ public class GuessStarterRecursive {
     }
 
     /**
-     * This method prompt the user for his guess,
+     * This method prompts the user for his guess,
      * gets the value and tells him if it was too high or too low.
      * @param random the random generated number to guess
      */
