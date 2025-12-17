@@ -61,6 +61,21 @@ public class ArrayExamples {
         // reduce
         double total = sum(a);
         System.out.println("total = " + total);
+
+        double[] d = powArray(a,3);
+        for(int i=0; i < a.length; i++){
+            System.out.println(a[i]);
+        }
+
+        int[] histogram = histogram(array, 10);
+        for(int counter : histogram){
+            System.out.println(counter);
+        }
+
+        System.out.println(indexOfMax(array));
+        System.out.println(sieve(5));
+        System.out.println(areFactors(24,array));
+        System.out.println(areFactors(24,array));
     }
 
     /**
@@ -95,6 +110,124 @@ public class ArrayExamples {
             total += a[i];
         }
         return total;
+    }
+
+    /**
+     * This method raises the elements of a double
+     * array to a given power.
+     * @param a the double array
+     * @param n the exponent of the power
+     * @return a new double array containing the powers
+     * of the elements of the initial array
+     */
+    public static double[] powArray(double[] a, int n){
+        for(int i =0; i<a.length; i++){
+            a[i] = Math.pow(a[i],n);
+        }
+        return a;
+    }
+
+    /**
+     * This method takes an int array of scores
+     * and returns a histogram of counters.
+     * @param scores the int array containing the
+     *               scores to be analyzed
+     * @param counters the number of counters to
+     *                 return in the histogram
+     * @return a new in array ith the counters of
+     * the histogram
+     */
+    public static int[] histogram(int[] scores, int counters){
+        int[] counts = new int[counters];
+        for (int score : scores){
+            counts[score] ++;
+        }
+        return counts;
+    }
+
+    /**
+     * This method finds the index of the
+     * largest element of a given int array.
+     * @param a an int array
+     * @return the index of the largest element
+     */
+    public static int indexOfMax(int[] a){
+        int indexOfMax = 0, max = 0;
+        for(int i=0; i < a.length; i++){
+            if(i==0) {
+                max = a[0];
+            }
+            else{
+                if(a[i] > max){
+                    max = a[i];
+                    indexOfMax = i;
+                }
+            }
+        }
+        return indexOfMax;
+    }
+
+    /**
+     * This method uses the Sieve of Eratosthenes'
+     * algorithm to find whether a given positive
+     * number is prime.
+     * @param n a positive number
+     * @return true if the number is prime,
+     * false otherwise
+     */
+    public static boolean sieve(int n){
+        boolean isPrime = true;
+        int[] numbers = new int[n];
+        for(int p = 0; p < numbers.length; p++){
+            numbers[p] = p;
+        }
+        for(int i=2; i <= n/2; i++){
+            if(numbers[i]==0)
+                continue;
+            else if(n%i==0){
+                isPrime = false;
+            }
+            else if(numbers[i]!=0){
+                for(int j=i; j <= n/2; j++){
+                    if(numbers[j]%i==0)
+                        numbers[j] = 0;
+                }
+            }
+        }
+        return isPrime;
+    }
+
+    /**
+     * This method determines whether
+     * all the elements of an int array
+     * are factors of an integer given.
+     * @param n an integer
+     * @param a an int array
+     * @return true if all the elements
+     * are factors of n, false otherwise
+     */
+    public static boolean areFactors(int n, int[] a){
+        boolean areFactors = true;
+        for(int number : a){
+            if(n%number!=0) {
+                areFactors = false;
+                break;
+            }
+        }
+        return areFactors;
+    }
+
+    public static boolean arePrimeFactors(int n, int[] a){
+        boolean arePrimeFactors = true;
+        for(int number : a){
+            if(!sieve(number)) {
+                arePrimeFactors = false;
+                break;
+            }
+        }
+        if(!areFactors(n,a))
+            arePrimeFactors = false;
+        return arePrimeFactors;
     }
 
 }

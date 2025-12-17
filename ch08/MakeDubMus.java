@@ -17,6 +17,12 @@ public class MakeDubMus {
         }
     }
 
+    /**
+     * This method computes the sum of the values
+     * of a given int array.
+     * @param zoo an int array
+     * @return the sum of the elements
+     */
     public static int mus(int[] zoo) {
         int fus = 0;
         for (int i = 0; i < zoo.length; i++) {
