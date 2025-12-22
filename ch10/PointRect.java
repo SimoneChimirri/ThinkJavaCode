@@ -26,6 +26,8 @@ public class PointRect {
         System.out.println(box2.width);
         box1.grow(50, 50);
         System.out.println(box2.width);
+        exercise2();
+        exercise3();
     }
 
     /**
