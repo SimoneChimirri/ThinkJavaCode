@@ -28,6 +28,8 @@ public class TimeClient {
 
         // using the instance method
         endTime = startTime.add(runningTime);
+        time1.increment(3548);
+        System.out.println(time1);
     }
 
 }

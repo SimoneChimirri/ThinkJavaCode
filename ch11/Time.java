@@ -89,14 +89,11 @@ public class Time {
      */
     public void increment(double seconds) {
         this.second += seconds;
-        while (this.second >= 60.0) {
-            this.second -= 60.0;
-            this.minute += 1;
-        }
-        while (this.minute >= 60) {
-            this.minute -= 60;
-            this.hour += 1;
-        }
+        this.minute += (int) this.second / (int) 60.0;
+        this.second %= 60.0;
+        this.hour += (int) this.minute / (int) 60.0;
+        this.minute %= 60;
+        this.hour %= 24;
     }
 
 }
