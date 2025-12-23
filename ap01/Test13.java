@@ -1,7 +1,7 @@
 /**
  * Test sorting algorithms for decks of cards.
  */
-public class Test {
+public class Test13 {
 
     /**
      * Checks that the deck is sorted.
@@ -31,6 +31,12 @@ public class Test {
         deck = new Deck();
         deck.shuffle();
         deck = deck.mergeSort();
+        checkSorted(deck);
+
+        System.out.println("Testing mergesort...");
+        deck = new Deck();
+        deck.shuffle();
+        deck = deck.mergeSortRecursive();
         checkSorted(deck);
 
         System.out.println("Testing insertion...");

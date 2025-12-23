@@ -95,6 +95,10 @@ public class Search {
         return suits;
     }
 
+    /**
+     * Determines whether a hand is a "flush", so if
+     * contains five or more cards of one suit.
+     */
     public static boolean hasFlush(Card[] cards){
         boolean hasFlush = false;
         int[] histogram = suitHist(cards);
