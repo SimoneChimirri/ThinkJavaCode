@@ -85,6 +85,28 @@ public class Search {
     }
 
     /**
+     * Returns a histogram of the suits in a hand.
+     */
+    public static int[] suitHist(Card[] cards){
+        int[] suits = new int[4];
+        for (Card card : cards){
+            suits[card.getSuit()] ++;
+        }
+        return suits;
+    }
+
+    public static boolean hasFlush(Card[] cards){
+        boolean hasFlush = false;
+        int[] histogram = suitHist(cards);
+        for(int index : histogram){
+            if(index >= 5){
+                return true;
+            }
+        }
+        return hasFlush;
+    }
+
+    /**
      * Demonstrates how to call the search methods.
      */
     public static void main(String[] args) {
@@ -107,6 +129,10 @@ public class Search {
         System.out.println("Recursive binary search");
         System.out.println(binarySearch(cards, jack, 0, 51));
         System.out.println();
+        for(int index : suitHist(cards)) {
+            System.out.println(index);
+        }
+        System.out.println(hasFlush(cards));
     }
 
 }
