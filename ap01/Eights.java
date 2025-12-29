@@ -7,8 +7,8 @@ import java.util.Scanner;
  */
 public class Eights {
 
-    private Player one;
-    private Player two;
+    private PlayerStrategist one;
+    private PlayerStrategist two;
     private Hand drawPile;
     private Hand discardPile;
     private Scanner in;
@@ -17,15 +17,15 @@ public class Eights {
      * Initializes the state of the game.
      */
     public Eights() {
-        Deck deck = new Deck("Deck");
+        Deck1 deck = new Deck1("Deck");
         deck.shuffle();
 
         // deal cards to each player
         int handSize = 5;
-        one = new Player("Allen");
+        one = new PlayerStrategist("Allen");
         deck.deal(one.getHand(), handSize);
 
-        two = new Player("Chris");
+        two = new PlayerStrategist("Chris");
         deck.deal(two.getHand(), handSize);
 
         // turn one card face up

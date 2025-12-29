@@ -1,10 +1,10 @@
 /**
  * Test code for Deck and Hand.
  */
-public class Test {
+public class Test14 {
 
     public static void main(String[] args) {
-        Deck deck = new Deck("Deck");
+        Deck1 deck = new Deck1("Deck");
         deck.shuffle();
 
         Hand hand = new Hand("Hand");

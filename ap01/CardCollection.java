@@ -17,6 +17,9 @@ public class CardCollection {
         this.cards = new ArrayList<Card>();
     }
 
+    public CardCollection() {
+    }
+
     /**
      * Returns the label of the card collection.
      */

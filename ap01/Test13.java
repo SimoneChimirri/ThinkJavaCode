@@ -44,6 +44,8 @@ public class Test13 {
         deck.shuffle();
         deck.insertionSort();
         checkSorted(deck);
+
+        System.out.println(deck);
     }
 
 }

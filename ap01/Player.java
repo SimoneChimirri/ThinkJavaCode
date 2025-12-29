@@ -3,8 +3,8 @@
  */
 public class Player {
 
-    private String name;
-    private Hand hand;
+    protected String name;
+    protected Hand hand;
 
     /**
      * Constructs a player with an empty hand.
@@ -32,6 +32,10 @@ public class Player {
      * Removes and returns a legal card from the player's hand.
      */
     public Card play(Eights eights, Card prev) {
+        for(int i = 0; i < hand.size(); i++){
+            if(hand.getCard(i).getRank() == 8)
+                return hand.popCard(i);
+        }
         Card card = searchForMatch(prev);
         if (card == null) {
             card = drawForMatch(eights, prev);
