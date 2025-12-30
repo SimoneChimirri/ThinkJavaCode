@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -7,8 +8,9 @@ import java.util.Scanner;
  */
 public class Eights {
 
-    private PlayerStrategist one;
-    private PlayerStrategist two;
+    private Genius one;
+    private Player two;
+    private ArrayList<Player> players = new ArrayList<>();
     private Hand drawPile;
     private Hand discardPile;
     private Scanner in;
@@ -22,10 +24,10 @@ public class Eights {
 
         // deal cards to each player
         int handSize = 5;
-        one = new PlayerStrategist("Allen");
+        one = new Genius("Genius");
         deck.deal(one.getHand(), handSize);
 
-        two = new PlayerStrategist("Chris");
+        two = new Player("Chris");
         deck.deal(two.getHand(), handSize);
 
         // turn one card face up
@@ -41,10 +43,67 @@ public class Eights {
     }
 
     /**
+     * Initializes the state of the game with a
+     * non-previously specified number of players.
+     */
+    public Eights(ArrayList<Player> players){
+        Deck1 deck = new Deck1("Deck");
+        deck.shuffle();
+
+        // start with the provided players list or receive it from input
+        int handSize = 5;
+        this.players = new ArrayList<>();
+
+        // create the scanner we'll use to type in from the user
+        in = new Scanner(System.in);
+
+        if (players != null && !players.isEmpty()) {
+            this.players = players;
+            for (Player p : this.players) {
+                deck.deal(p.getHand(), handSize);
+            }
+        } else {
+            while(true){
+                System.out.println("Type in the name of the player (or 'done' if all the players are ready):");
+                String name = in.nextLine().trim();
+                if (name.equals("done")) {
+                    break;
+                }
+                Player p = new Player(name);
+                this.players.add(p);
+                deck.deal(p.getHand(), handSize);
+            }
+
+            // if no players were added, use the two default players
+            if (this.players.isEmpty()) {
+                one = new Genius("Genius");
+                deck.deal(one.getHand(), handSize);
+                two = new Player("Chris");
+                deck.deal(two.getHand(), handSize);
+                this.players.add(one);
+                this.players.add(two);
+            }
+        }
+
+        // turn one card face up
+        discardPile = new Hand("Discards");
+        deck.deal(discardPile, 1);
+
+        // put the rest of the deck face down
+        drawPile = new Hand("Draw pile");
+        deck.dealAll(drawPile);
+
+    }
+
+    /**
      * Returns true if either hand is empty.
      */
     public boolean isDone() {
-        return one.getHand().empty() || two.getHand().empty();
+        for (Player player : players){
+            if(player.getHand().empty())
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -78,19 +137,17 @@ public class Eights {
      * Switches players.
      */
     public Player nextPlayer(Player current) {
-        if (current == one) {
-            return two;
-        } else {
-            return one;
+        int index = players.indexOf(current);
+        if (index == players.size() - 1) {
+            return players.getFirst();
         }
+        return players.get(players.indexOf(current) + 1);
     }
 
-    /**
-     * Displays the state of the game.
-     */
     public void displayState() {
-        one.display();
-        two.display();
+        for(Player player: players){
+            player.display();
+        }
         discardPile.display();
         System.out.print("Draw pile: ");
         System.out.println(drawPile.size() + " cards");
@@ -119,7 +176,11 @@ public class Eights {
      * Plays the game.
      */
     public void playGame() {
-        Player player = one;
+        if(players.isEmpty()){
+            players.add(one);
+            players.add(two);
+        }
+        Player player = players.getFirst();
 
         // keep playing until there's a winner
         while (!isDone()) {
@@ -130,16 +191,51 @@ public class Eights {
         }
 
         // display the final score
-        one.displayScore();
-        two.displayScore();
+        for(Player p : players){
+            player.displayScore();
+        }
+    }
+
+
+    /**
+     * Creates a loop that plays the game 100 times.
+     */
+    private static int[] play100Times() {
+        int[] wins = new int[2];
+        for(int i=0; i < 100; i++) {
+            Eights game = new Eights();
+            Player player = game.one;
+
+            // keep playing until there's a winner
+            while (!game.isDone()) {
+                //displayState();
+                //waitForUser();
+                game.takeTurn(player);
+                player = game.nextPlayer(player);
+            }
+
+            if (player == game.two)
+                wins[0]++;
+            else
+                wins[1]++;
+        }
+
+        return wins;
     }
 
     /**
      * Creates the game and runs it.
      */
     public static void main(String[] args) {
+        ArrayList<Player> players = new ArrayList<Player>();
+        Eights games = new Eights(players);
+        games.playGame();
         Eights game = new Eights();
-        game.playGame();
+        //game.playGame();
+        int[] wins = game.play100Times();
+        System.out.printf("%s has won %d times!", game.one.getName(), wins[0]);
+        System.out.println();
+        System.out.printf("%s has won %d times!", game.two.getName(), wins[1]);
     }
 
 }

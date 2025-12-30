@@ -1,6 +1,6 @@
-public class PlayerStrategist extends Player{
+public class Genius extends Player{
 
-    public PlayerStrategist(String name){
+    public Genius(String name){
         super(name);
     }
 
