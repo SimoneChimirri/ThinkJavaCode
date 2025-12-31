@@ -4,14 +4,14 @@
 public class Player {
 
     protected String name;
-    protected Hand hand;
+    protected EightsHand hand;
 
     /**
      * Constructs a player with an empty hand.
      */
     public Player(String name) {
         this.name = name;
-        this.hand = new Hand(name);
+        this.hand = new EightsHand(name);
     }
 
     /**
@@ -24,7 +24,7 @@ public class Player {
     /**
      * Gets the player's hand.
      */
-    public Hand getHand() {
+    public EightsHand getHand() {
         return hand;
     }
 
@@ -36,7 +36,7 @@ public class Player {
             if(hand.getCard(i).getRank() == 8)
                 return hand.popCard(i);
         }
-        Card card = searchForMatch(prev);
+        EightsCard card = searchForMatch(prev);
         if (card == null) {
             card = drawForMatch(eights, prev);
         }
@@ -46,11 +46,13 @@ public class Player {
     /**
      * Searches the player's hand for a matching card.
      */
-    public Card searchForMatch(Card prev) {
+    public EightsCard searchForMatch(Card prev) {
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.getCard(i);
-            if (cardMatches(card, prev)) {
-                return hand.popCard(i);
+            EightsCard eightsCard = new EightsCard(card.getRank(), card.getSuit());
+            if (eightsCard.match(prev)) {
+                Card pop = hand.popCard(i);
+                return new EightsCard(pop.getRank(), pop.getSuit());
             }
         }
         return null;
@@ -59,12 +61,13 @@ public class Player {
     /**
      * Draws cards until a match is found.
      */
-    public Card drawForMatch(Eights eights, Card prev) {
+    public EightsCard drawForMatch(Eights eights, Card prev) {
         while (true) {
             Card card = eights.draw();
+            EightsCard eightsCard = new EightsCard(card.getRank(), card.getSuit());
             System.out.println(name + " draws " + card);
-            if (cardMatches(card, prev)) {
-                return card;
+            if (eightsCard.match(prev)) {
+                return eightsCard;
             }
             hand.addCard(card);
         }
@@ -90,19 +93,7 @@ public class Player {
      * Calculates the player's score (penalty points).
      */
     public int score() {
-        int sum = 0;
-        for (int i = 0; i < hand.size(); i++) {
-            Card card = hand.getCard(i);
-            int rank = card.getRank();
-            if (rank == 8) {
-                sum -= 20;
-            } else if (rank > 10) {
-                sum -= 10;
-            } else {
-                sum -= rank;
-            }
-        }
-        return sum;
+        return hand.scoreHand();
     }
 
     /**

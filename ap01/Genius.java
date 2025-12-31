@@ -13,9 +13,9 @@ public class Genius extends Player{
 
         int index = hand.size() - 1;
         int rank = 0;
-        Card cardHigh = null;
+        EightsCard cardHigh = null;
         for(int i = 0; i < hand.size(); i++) {
-            if (cardMatches(hand.getCard(i), prev) && hand.getCard(i).getRank() > rank){
+            if (hand.getCard(i).match(prev) && hand.getCard(i).getRank() > rank){
                 rank = hand.getCard(i).getRank();
                 cardHigh = hand.getCard(i);
                 index = i;

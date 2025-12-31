@@ -11,8 +11,8 @@ public class Eights {
     private Genius one;
     private Player two;
     private ArrayList<Player> players = new ArrayList<>();
-    private Hand drawPile;
-    private Hand discardPile;
+    private EightsHand drawPile;
+    private EightsHand discardPile;
     private Scanner in;
 
     /**
@@ -31,11 +31,11 @@ public class Eights {
         deck.deal(two.getHand(), handSize);
 
         // turn one card face up
-        discardPile = new Hand("Discards");
+        discardPile = new EightsHand("Discards");
         deck.deal(discardPile, 1);
 
         // put the rest of the deck face down
-        drawPile = new Hand("Draw pile");
+        drawPile = new EightsHand("Draw pile");
         deck.dealAll(drawPile);
 
         // create the scanner we'll use to wait for the user
@@ -86,11 +86,11 @@ public class Eights {
         }
 
         // turn one card face up
-        discardPile = new Hand("Discards");
+        discardPile = new EightsHand("Discards");
         deck.deal(discardPile, 1);
 
         // put the rest of the deck face down
-        drawPile = new Hand("Draw pile");
+        drawPile = new EightsHand("Draw pile");
         deck.dealAll(drawPile);
 
     }
@@ -172,6 +172,12 @@ public class Eights {
         System.out.println();
     }
 
+    public void takeTurn100(Player player){
+        Card prev = discardPile.last();
+        Card next = player.play(this, prev);
+        discardPile.addCard(next);
+    }
+
     /**
      * Plays the game.
      */
@@ -192,7 +198,7 @@ public class Eights {
 
         // display the final score
         for(Player p : players){
-            player.displayScore();
+            p.displayScore();
         }
     }
 
@@ -210,8 +216,11 @@ public class Eights {
             while (!game.isDone()) {
                 //displayState();
                 //waitForUser();
-                game.takeTurn(player);
-                player = game.nextPlayer(player);
+                game.takeTurn100(player);
+                if(player.equals(game.one))
+                    player = game.two;
+                else
+                    player = game.one;
             }
 
             if (player == game.two)
@@ -228,14 +237,14 @@ public class Eights {
      */
     public static void main(String[] args) {
         ArrayList<Player> players = new ArrayList<Player>();
-        Eights games = new Eights(players);
-        games.playGame();
+        //Eights games = new Eights(players);
+        //games.playGame();
         Eights game = new Eights();
-        //game.playGame();
-        int[] wins = game.play100Times();
-        System.out.printf("%s has won %d times!", game.one.getName(), wins[0]);
+        game.playGame();
+        //int[] wins = game.play100Times();
+        //System.out.printf("%s has won %d times!", game.one.getName(), wins[0]);
         System.out.println();
-        System.out.printf("%s has won %d times!", game.two.getName(), wins[1]);
+        //System.out.printf("%s has won %d times!", game.two.getName(), wins[1]);
     }
 
 }
